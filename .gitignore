@@ -1,4 +1,12 @@
 /build
+backend/*/__pycache__
+*/__pycache__
+
+*/configs.json
+*/package.json
+*/package-lock.json
 
 .env
-*/configs.json
+
+access.log
+*/my_data.db

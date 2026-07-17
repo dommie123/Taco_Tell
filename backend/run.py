@@ -15,5 +15,4 @@ def log_request():
     with open('access.log', 'a') as log:
         log.write(f"{request.remote_addr} - {request.method} {request.path}\n")
 
-app.run(host="10.0.0.252", port=5000, debug=True)
-# app.run(host="192.168.215.188", port=5000, debug=True)
+app.run(host="127.0.0.1", port=5000, debug=True)
