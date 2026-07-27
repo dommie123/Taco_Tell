@@ -1,0 +1,33 @@
+.dynamic-table {
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 1em;
+}
+
+.dynamic-table-tr {
+    word-wrap: break-word;
+    height: fit-content;
+}
+
+.dynamic-table-td {
+    padding: 5px;
+    padding-left: 5px;
+    margin: 0;
+    text-align: left;
+}
+
+.dynamic-table-th, .dynamic-table-td {
+    border: 1px solid black;
+    margin: 0;
+}
+
+.dynamic-table-no-data-message {
+    width: 25%;
+    min-width: 100px;
+    background-color: lightgray;
+    color: red;
+    font-weight: bold;
+    position: relative;
+    left: calc(40% - 50px);
+    padding: 10px;
+}

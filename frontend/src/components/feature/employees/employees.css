@@ -1,0 +1,8 @@
+.employees-table {
+    table-layout: fixed;
+}
+
+.employees-table-th {
+    background-color: rgb(88, 40, 143);
+    color: white;
+}
