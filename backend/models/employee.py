@@ -4,9 +4,9 @@ class Employee(db.Model):
     __tablename__ = "employees"
 
     id = db.Column(db.Integer, primary_key=True)
+    employee_id = db.Column(db.Integer)
     first_name = db.Column(db.String(80))
     last_name = db.Column(db.String(80))
-    employee_id = db.Column(db.Integer)
     phone = db.Column(db.String(80))
 
     def __init__(self, first_name, last_name, employee_id, phone):
@@ -18,9 +18,9 @@ class Employee(db.Model):
     def json(self):
         return {
             'id': self.id,
+            'employee_id': self.employee_id,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'employee_id': self.employee_id,
             'phone': self.phone
         }
     

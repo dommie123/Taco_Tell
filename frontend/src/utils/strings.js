@@ -1,6 +1,8 @@
+import { InvalidStringError } from '../errors';
+
 export function toPascalCase(string, delimiter = " ") {
     if (typeof string !== "string") {
-        throw Error(`${string} is not a valid string!`);
+        throw InvalidStringError(string);
     }
 
     const wordsArr = string.split(delimiter);
