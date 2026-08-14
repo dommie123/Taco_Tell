@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { MOCK_EMPLOYEES_DATA } from '../../../constants';
-import { axiosGet } from '../../../utils/axios-helpers';
+import { axiosGet } from '../../../utils/axiosHelpers';
 
 import { DynamicTable } from '../../common';
 
