@@ -1,0 +1,65 @@
+.drawer-container {
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+}
+
+/* Backdrop fades in when open */
+.drawer-container.drawer-open {
+    opacity: 1;
+}
+
+/* Backdrop fades out & disables clicks when closed */
+.drawer-container.drawer-closed {
+    opacity: 0;
+    pointer-events: none; /* Prevents accidental clicks on invisible backdrop */
+}
+
+.drawer-content {
+    width: 25%;
+    min-width: 150px;
+    max-width: 350px;
+    background-color: white;
+    float: right;
+    height: 100%;
+    text-align: left;
+    transform-origin: right center;
+}
+
+/* Content slides in when open */
+.drawer-content.drawer-visible {
+    transition-property: transform;
+    transition-duration: 350ms;
+    transition-timing-function: ease-out;
+    transform: translateX(0); /* Fully visible */
+}
+
+/* Content slides back offscreen when closed */
+.drawer-content.drawer-hidden {
+    transition-duration: 250ms; /* Slightly faster slide-back for snappy feel */
+    transform: translateX(100%); /* Hidden to the right edge */
+}
+
+.drawer-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.drawer-list-item {
+    padding: 20px 15px;
+    cursor: pointer;
+    transition-duration: 200ms;
+    background-color: white;
+}
+
+.drawer-list-item:hover {
+    background-color: lightgray;
+}

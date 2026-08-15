@@ -23,12 +23,15 @@ describe('Drawer Component Unit Tests', () => {
   test('should open drawer when menu button is clicked', () => {
     const mockOnClose = jest.fn();
     const mockOnItemSelect = jest.fn();
+
+    let drawerOpen = false;
+    let mockOpenDrawer = () => { drawerOpen = true };
     
     render(
       <div>
-        <button data-testid="menu-button">Menu</button>
+        <button data-testid="menu-button" onClick={() => { drawerOpen = true }}>Menu</button>
         <Drawer 
-          isOpen={false} 
+          isOpen={drawerOpen} 
           onClose={mockOnClose} 
           onItemSelect={mockOnItemSelect}
         >
@@ -112,7 +115,7 @@ describe('Drawer Component Unit Tests', () => {
       </div>
     );
     
-    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape', code: 'Escape' });
+    fireEvent.keyDown(document.body, { key: 'Escape', code: 'Escape' });
     
     expect(mockOnClose).toHaveBeenCalled();
   });
