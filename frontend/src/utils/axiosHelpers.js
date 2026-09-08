@@ -10,3 +10,11 @@ export async function axiosGet(endpoint, config) {
 
     return await axios.get(`${SERVER_URL}/${endpoint}`, config);
 }
+
+export async function axiosPost(endpoint, data, config) {
+    if (typeof endpoint !== "string") {
+        throw new InvalidEndpointError();
+    }
+
+    return await axios.postForm(`${SERVER_URL}/${endpoint}`, data, config);
+}

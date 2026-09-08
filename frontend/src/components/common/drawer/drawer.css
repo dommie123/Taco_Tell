@@ -9,6 +9,7 @@
     transition-property: opacity;
     transition-duration: 300ms;
     transition-timing-function: ease-in-out;
+    overflow-x: hidden;
 }
 
 /* Backdrop fades in when open */
