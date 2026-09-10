@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/add_employee",
-        element: <AddEmployee onEmployeeCreated={() => {}} />
+        element: <AddEmployee onEmployeeCreated={(employee) => { console.log(`Employee ${employee.first_name} ${employee.last_name}, ID: ${employee.employee_id} Phone Number: ${employee.phone} created!`)}} />
     }
 ]);
 

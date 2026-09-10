@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 
 import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -11,8 +10,6 @@ import { setCMOpen, setCMCoords } from '../slices/globalSlice';
 
 import Router from '../nav/router';
 import { Drawer } from '../components/common';
-// import { Employees } from '../components/feature';
-// import { AddEmployee } from '../components/feature';
 
 import './App.css';
 
@@ -55,8 +52,6 @@ function App() {
 					<MenuIcon />
 				</IconButton>
 			</header>
-			{/* <Employees /> */}
-			{/* <AddEmployee onEmployeeCreated={() => { console.log("Employee created!") }}/> */}
 			<Router />
 			<Drawer
 				isOpen={drawerOpen}

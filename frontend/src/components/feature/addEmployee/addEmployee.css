@@ -1,3 +1,47 @@
 .add-employee-form {
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.add-employee-form-input {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 25px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    height: 35px;
+}
+
+.add-employee-input-label {
+    grid-row: 1;
+    grid-column: 1;
+    text-align: left;
+    max-width: 250px;
+    margin-left: 1em;
+}
+
+.add-employee-textbox {
+    /* float: right;
+    width: 75%;
+    max-width: 1500px; */
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+}
+
+.add-employee-submit-btn {
+    max-width: 150px;
+    margin: 25px auto;
+}
+
+.add-employee-input-error-message {
+    grid-column: 1 / 2;
+    grid-row: 2;
+    font-weight: bold;
+    font-size: 12px;
+    color: red;
+    text-align: left;
+    margin: 1em;
 }

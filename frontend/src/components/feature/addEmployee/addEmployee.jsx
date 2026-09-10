@@ -15,7 +15,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
         last_name: false,
         employee_id: false,
         phone: false
-    }}, [])
+    }}, []);
 
     const [employee, setEmployee] = useState(initialEmployeeState);
     const [error, setError] = useState(initialErrorState);
@@ -23,7 +23,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
     const [submitAttempt, setSubmitAttempt] = useState(0);
 
     const validateFirstName = useCallback(() => {
-        const reName = new RegExp("[a-zA-Z]+", "gi");
+        const reName = new RegExp("^[a-zA-Z]+$", "gi");
         
         if (employee.first_name === "") {
             return "empty";
@@ -31,20 +31,20 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
             return reName.test(employee.first_name)
         }
 
-    }, [employee.first_name])
+    }, [employee.first_name]);
 
     const validateLastName = useCallback(() => {
-        const reName = new RegExp("[a-zA-Z]+", "gi");
+        const reName = new RegExp("^[a-zA-Z]+$", "gi");
         
         if (employee.last_name === "") {
             return "empty";
         } else { 
             return reName.test(employee.last_name);
         } 
-    }, [employee.last_name])
+    }, [employee.last_name]);
 
     const validateEmployeeID = useCallback(() => {
-        const reEmpID = new RegExp("[0-9]{4}", "g");
+        const reEmpID = new RegExp("^[0-9]{4}$", "g");
         return reEmpID.test(employee.employee_id);
     }, [employee.employee_id]);
 
@@ -56,7 +56,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
         } else {
             return rePhone.test(employee.phone);
         }
-    }, [employee.phone])
+    }, [employee.phone]);
 
     const validateProperties = () => {
         const firstNameValid = validateFirstName();
@@ -99,7 +99,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
                 employeeValid = false;
                 return;
             }
-        })
+        });
 
         return employeeValid;
     }, [employee]);
@@ -116,9 +116,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
             return;
         }
 
-        // TODO if all information is valid, submit form data to server and send user back to main dashboard
-        console.log("Submitting Employee Info...");
-        onEmployeeCreated();
+        onEmployeeCreated(employee);
     }
 
     useEffect(() => {
@@ -127,9 +125,9 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
         }
 
         validateProperties();
-        setSubmitDisabled(!(error.first_name || error.last_name || error.employee_id || error.phone));
+        setSubmitDisabled(error.first_name || error.last_name || error.employee_id || error.phone);
 
-    }, [employee, submitAttempt, debug])
+    }, [employee, error.first_name, error.last_name, error.employee_id, error.phone, submitAttempt, debug]);
 
     useEffect(() => {
         if (debug) {
@@ -142,25 +140,34 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
             setSubmitAttempt(0);
         }
 
+        // eslint-disable-next-line
     }, [initialErrorState, initialEmployeeState])
 
     return (
         <form className="add-employee-form" role="form" onSubmit={handleSubmit}>
-            <label className={`add-employee-input-label ${error.first_name ? "error" : ""}`} htmlFor="first-name">First Name: </label>
-            <input className={`add-employee-textbox ${error.first_name ? "error" : ""}`} type="text" id="first-name" onChange={(e) => { setEmployee({ ...employee, first_name: e.target.value }) }} />
-            {error.first_name ? <p className="add-employee-input-error-message">{error.first_name}</p> : null}
+            <div className="add-employee-form-input">
+                <label className={`add-employee-input-label ${error.first_name ? "error" : ""}`} htmlFor="first-name">First Name: </label>
+                <input className={`add-employee-textbox ${error.first_name ? "error" : ""}`} type="text" id="first-name" onChange={(e) => { setEmployee({ ...employee, first_name: e.target.value }) }} />
+                {error.first_name ? <p className="add-employee-input-error-message">{error.first_name}</p> : null}
+            </div>
 
-            <label className={`add-employee-input-label ${error.last_name ? "error" : ""}`} htmlFor="last-name">Last Name: </label>
-            <input className={`add-employee-textbox ${error.last_name ? "error" : ""}`} type="text" id="last-name" onChange={(e) => { setEmployee({ ...employee, last_name: e.target.value }) }} />
-            {error.last_name ? <p className="add-employee-input-error-message">{error.last_name}</p> : null}
+            <div className="add-employee-form-input">
+                <label className={`add-employee-input-label ${error.last_name ? "error" : ""}`} htmlFor="last-name">Last Name: </label>
+                <input className={`add-employee-textbox ${error.last_name ? "error" : ""}`} type="text" id="last-name" onChange={(e) => { setEmployee({ ...employee, last_name: e.target.value }) }} />
+                {error.last_name ? <p className="add-employee-input-error-message">{error.last_name}</p> : null}
+            </div>
 
-            <label className={`add-employee-input-label ${error.employee_id ? "error" : ""}`} htmlFor="employee-id">Employee ID: </label>
-            <input className={`add-employee-textbox ${error.employee_id ? "error" : ""}`} type="text" id="employee-id" onChange={(e) => { setEmployee({ ...employee, employee_id: e.target.value }) }} />
-            {error.employee_id ? <p className="add-employee-input-error-message">{error.employee_id}</p> : null}
+            <div className="add-employee-form-input">
+                <label className={`add-employee-input-label ${error.employee_id ? "error" : ""}`} htmlFor="employee-id">Employee ID: </label>
+                <input className={`add-employee-textbox ${error.employee_id ? "error" : ""}`} type="text" id="employee-id" onChange={(e) => { setEmployee({ ...employee, employee_id: e.target.value }) }} />
+                {error.employee_id ? <p className="add-employee-input-error-message">{error.employee_id}</p> : null}
+            </div>
 
-            <label className={`add-employee-input-label ${error.phone ? "error" : ""}`} htmlFor="phone-number">Phone Number: </label>
-            <input className={`add-employee-textbox ${error.phone ? "error" : ""}`} type="tel" id="phone-number" onChange={(e) => { setEmployee({ ...employee, phone: e.target.value }) }} />
-            {error.phone ? <p className="add-employee-input-error-message">{error.phone}</p> : null}
+            <div className="add-employee-form-input">
+                <label className={`add-employee-input-label ${error.phone ? "error" : ""}`} htmlFor="phone-number">Phone Number: </label>
+                <input className={`add-employee-textbox ${error.phone ? "error" : ""}`} type="tel" id="phone-number" onChange={(e) => { setEmployee({ ...employee, phone: e.target.value }) }} />
+                {error.phone ? <p className="add-employee-input-error-message">{error.phone}</p> : null}
+            </div>
 
             <input className={`add-employee-submit-btn${submitDisabled ? " disabled" : ""}`} type="submit" value="Add Employee" disabled={submitDisabled} />
         </form>
