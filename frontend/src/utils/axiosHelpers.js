@@ -16,5 +16,5 @@ export async function axiosPost(endpoint, data, config) {
         throw new InvalidEndpointError();
     }
 
-    return await axios.postForm(`${SERVER_URL}/${endpoint}`, data, config);
+    return await axios.post(`${SERVER_URL}/${endpoint}`, data, config);
 }

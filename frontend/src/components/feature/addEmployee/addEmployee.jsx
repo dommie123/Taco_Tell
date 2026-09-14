@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 
+import { axiosPost } from '../../../utils/axiosHelpers';
+
 import './addEmployee.css';
 
 export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
@@ -116,7 +118,24 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
             return;
         }
 
-        onEmployeeCreated(employee);
+        const employeeObject = { ...employee }; // Attempt to convert form data to JavaScript object
+
+        axiosPost("employee", employeeObject).then(res => {
+            alert(res.data.message);
+            onEmployeeCreated(employee);
+        });
+
+        resetFormData();
+    }
+
+    const resetFormData = () => {
+        setEmployee(initialEmployeeState);
+        setError(initialErrorState);
+        setSubmitAttempt(0);
+
+        [...document.getElementsByClassName("add-employee-textbox")].forEach(el => {
+            el.value = "";
+        });
     }
 
     useEffect(() => {
@@ -127,6 +146,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
         validateProperties();
         setSubmitDisabled(error.first_name || error.last_name || error.employee_id || error.phone);
 
+        // eslint-disable-next-line
     }, [employee, error.first_name, error.last_name, error.employee_id, error.phone, submitAttempt, debug]);
 
     useEffect(() => {
@@ -135,9 +155,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
         }
         
         return () => {
-            setEmployee(initialEmployeeState);
-            setError(initialErrorState);
-            setSubmitAttempt(0);
+            resetFormData();
         }
 
         // eslint-disable-next-line
