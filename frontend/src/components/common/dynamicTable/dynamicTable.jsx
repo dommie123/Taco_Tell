@@ -1,13 +1,27 @@
 import React from 'react';
+import { IconButton } from '@mui/material';
 
 import { toPascalCase } from '../../../utils/strings';
 
-import './dynamicTable.css';
-import { AtmSharp } from '@mui/icons-material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export const DynamicTable = ({ className, items, columns = null }) => {
+import './dynamicTable.css';
+
+export const DynamicTable = ({ className, items, dataOptionsEnabled, onEntryOptionsClicked, columns = null }) => {
     const listItems = Boolean(items) ? items : [];
-    const tableColumns = Boolean(columns) ? columns : items.length > 0 ? Object.keys(items[0]) : []
+    const tableColumns = Boolean(columns) ? columns : items.length > 0 ? Object.keys(items[0]).filter(col => col !== "id") : []
+
+    const handleEntryOptionsClicked = (event, item) => {
+        if (!onEntryOptionsClicked) {
+            console.warn("WARNING: No function defined for toggling data options! Please define a function!");
+            return;
+        } else if (typeof onEntryOptionsClicked !== "function") {
+            console.warn(`WARNING: onEntryOptionsClicked is currently not a valid function! Please change it from a ${typeof onEntryOptionsClicked} to a function!`);
+            return;
+        }
+
+        onEntryOptionsClicked(event, item);
+    }
 
     return (
         <table className={`${className} dynamic-table`} role="table">
@@ -21,11 +35,20 @@ export const DynamicTable = ({ className, items, columns = null }) => {
                     </tr>
                 </thead>
                 <tbody className={`${className}-body dynamic-table-body`}>
-                    {listItems.map((item, index) => <tr key={Math.random()} className={`${className}-tr-${index} dynamic-table-tr-${index}`} role="row">
-                        {tableColumns.map(col => <td key={Math.random()} className={`${className}-td-${item[col]} dynamic-table-td-${item[col]} dynamic-table-td`}>
-                            {item[col]}
+                    {listItems.map((item, index) => (
+                    <tr 
+                        key={Math.random()} 
+                        className={`${className}-tr-${index} dynamic-table-tr-${index}`} 
+                        role="row" 
+                    >
+                        {tableColumns.map((col, index) => <td key={Math.random()} className={`${className}-td-${item[col]} dynamic-table-td-${item[col]} dynamic-table-td`}>
+                            {(index === 0 && dataOptionsEnabled ? 
+                            <IconButton onClick={(event) => { handleEntryOptionsClicked(event, item); }}>
+                                <MoreVertIcon fontSize="small" />
+                            </IconButton> : <></>)} {item[col]}
                         </td>)}
-                    </tr>)}
+                    </tr>
+                ))}
                 </tbody>
             </> : 
             <caption className="dynamic-table-no-data-message">No data currently available.</caption>

@@ -6,7 +6,11 @@ import { AddEmployee, Employees } from '../components/feature';
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Employees />
+        element: (
+            <>
+                <Employees />
+            </>
+        )
     },
     {
         path: "/add_employee",
