@@ -15,3 +15,9 @@ export class InvalidAnchorPositionError extends Error {
         super(`${anchorPosition} is not a valid anchor position!`, options);
     }
 }
+
+export class InvalidContextMenuOptionError extends Error {
+    constructor(option, options) {
+        super(`${option} is not a valid context menu option! Please define it in the Context Menu component!`, options);
+    }
+}

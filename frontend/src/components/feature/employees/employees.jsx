@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { MOCK_EMPLOYEES_DATA, CLIENT_URL } from '../../../constants';
-import { axiosGet } from '../../../utils/axiosHelpers';
+import { InvalidContextMenuOptionError } from '../../../errors';
 
 import { setCMOpen, setCMCoords } from '../../../slices/globalSlice';
+import { axiosGet, axiosDelete } from '../../../utils/axiosHelpers';
 
 import { DynamicTable, ContextMenu } from '../../common';
 
@@ -26,7 +27,22 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
 	}
 
     const handleCMItemClick = (item) => {
-        // TODO determinee which item has been clicked, then perform its designated action
+        switch (item) {
+            case "Edit":
+                alert("Feature coming soon...");
+                break;
+            case "Remove":
+                // TODO display modal with yes or no options asking to confirm whether they want to remove the user
+                let userResponse = window.confirm(`Are you sure you want to remove user ${cmItem.employee_id} from the database?`);
+                if (userResponse) {
+                    axiosDelete(`employee/${cmItem.employee_id}`).then(() => {}).catch(err => {
+                        alert(err.response.data.message);
+                    });
+                }
+                break;
+            default:
+                throw new InvalidContextMenuOptionError();
+        }
 
         dispatch(setCMOpen(false));
     }

@@ -77,6 +77,13 @@ class REmployee(Resource):
         if not employee:
             return {'message': "Employee not found!"}, 404
         return employee.json(), 200
+
+    @classmethod
+    def delete(cls, employee_id):
+        employee = Employee.find_by_employee_id(employee_id=employee_id)
+        if employee:
+            employee.delete_employee()
+        return {'message': "Employee has been deleted successfully!"}, 410
     
 
 class EmployeeList(Resource):
