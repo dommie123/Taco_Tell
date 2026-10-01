@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import './modal.css';
 
-export const Modal = ({ title, isOpen, onClose, children }) => {
+export const Modal = ({ title, isOpen, closable = true, onClose, children }) => {
     const [open, setOpen] = useState(isOpen);
 
     const handleClose = (event) => {
@@ -38,13 +38,13 @@ export const Modal = ({ title, isOpen, onClose, children }) => {
     }, [open])
 
     return open ? (
-        <div className="modal-backdrop" role="presentation" onClick={handleClose}>
+        <div className="modal-backdrop" role="presentation" onClick={(closable ? handleClose : () => {})}>
             <div className="modal-container" role="dialog">
                 <div className="modal-header">
                     <h2 className="modal-title">{title}</h2>
-                    <IconButton className="modal-close" onClick={handleClose} role="button">
+                    {closable ? <IconButton className="modal-close" onClick={handleClose} role="button">
                         <CloseIcon />
-                    </IconButton>
+                    </IconButton> : <></>}
                 </div>
                 <div className="modal-body">
                     {children}

@@ -6,3 +6,16 @@
     background-color: rgb(88, 40, 143);
     color: white;
 }
+
+.employee-confirm-removal-btn-suite {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 25px;
+    margin: auto 10px;
+}
+
+.employee-confirm-removal-btn-suite > button {
+    flex: 1;
+    margin: auto 5px;
+}

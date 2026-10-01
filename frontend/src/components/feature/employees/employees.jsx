@@ -7,7 +7,7 @@ import { InvalidContextMenuOptionError } from '../../../errors';
 import { setCMOpen, setCMCoords } from '../../../slices/globalSlice';
 import { axiosGet, axiosDelete } from '../../../utils/axiosHelpers';
 
-import { DynamicTable, ContextMenu } from '../../common';
+import { DynamicTable, ContextMenu, Modal } from '../../common';
 
 import './employees.css';
 
@@ -16,6 +16,7 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
     const [employees, setEmployees] = useState([]);
     const [employeesFetched, setEmployeesFetched] = useState(false);
     const [cmItem, setCMItem] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
     const dispatch = useDispatch();
 
     const handleOpenMenu = (event) => {
@@ -26,19 +27,36 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
 		dispatch(setCMOpen(!cmOpen));
 	}
 
+    const handleEditEmplopyee = (emp) => {
+        alert("Feature coming soon...");
+    }
+
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    }
+
+    const handleRemoveEmployee = (emp) => {
+        handleCloseModal();
+
+        axiosDelete(`employee/${emp.employee_id}`).then(() => {}).catch(err => {
+            alert(err.response.data.message);
+        });
+    }
+
     const handleCMItemClick = (item) => {
         switch (item) {
             case "Edit":
-                alert("Feature coming soon...");
+                handleEditEmplopyee(item);
                 break;
             case "Remove":
                 // TODO display modal with yes or no options asking to confirm whether they want to remove the user
-                let userResponse = window.confirm(`Are you sure you want to remove user ${cmItem.employee_id} from the database?`);
-                if (userResponse) {
-                    axiosDelete(`employee/${cmItem.employee_id}`).then(() => {}).catch(err => {
-                        alert(err.response.data.message);
-                    });
-                }
+                // let userResponse = window.confirm(`Are you sure you want to remove user ${cmItem.employee_id} from the database?`);
+                // if (userResponse) {
+                //     axiosDelete(`employee/${cmItem.employee_id}`).then(() => {}).catch(err => {
+                //         alert(err.response.data.message);
+                //     });
+                // }
+                setModalVisible(true);
                 break;
             default:
                 throw new InvalidContextMenuOptionError();
@@ -105,6 +123,13 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
             </button> : 
             <button className="add-employee-btn" onClick={handleAddNewEmployee}>Add Employee</button>
             }
+            {modalVisible ? <Modal title="Confirm Employee Removal" isOpen={true} closable={false}>
+                <p className="employee-confirm-removal-message">Are you sure you want to remove this employee?</p>
+                <div className="employee-confirm-removal-btn-suite">
+                    <button className="employee-confirm-removal-btn-yes" onClick={() => { handleRemoveEmployee(cmItem) }}>Yes</button>
+                    <button className="employee-confirm-removal-btn-no" onClick={() => { handleCloseModal() }}>No</button>
+                </div>
+            </Modal> : <></>}
         </div>
 
     )

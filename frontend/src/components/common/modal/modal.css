@@ -1,7 +1,10 @@
 .modal-backdrop {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    z-index: 10;
 }
 
 .modal-container {
@@ -10,9 +13,29 @@
     height: 30%;
     min-height: 200px;
     max-height: 1000px;
+    background-color: white;
     position: absolute;
     top: 30%;
     left: 40%;
     border: 1px solid gray;
     border-radius: 20px;
+    z-index: 11;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.modal-close {
+    flex: 1;
+    max-height: 35px;
+    margin-top: 10px !important;
+    margin-right: 5px !important;
+}
+
+.modal-title {
+    flex: 4;
+    text-align: center;
 }
