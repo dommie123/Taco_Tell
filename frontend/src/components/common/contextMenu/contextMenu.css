@@ -1,0 +1,20 @@
+.context-menu {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.context-menu-item {
+    cursor: pointer;
+    list-style-position: outside;
+    padding: 10px 5px;
+    transition-duration: 200ms;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.context-menu-item:hover {
+    background-color: lightgray;
+}

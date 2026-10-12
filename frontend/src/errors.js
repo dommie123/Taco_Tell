@@ -9,3 +9,15 @@ export class InvalidStringError extends Error {
         super(`${variable} is not a valid string!`, options);
     }
 }
+
+export class InvalidAnchorPositionError extends Error {
+    constructor(anchorPosition, options) {
+        super(`${anchorPosition} is not a valid anchor position!`, options);
+    }
+}
+
+export class InvalidContextMenuOptionError extends Error {
+    constructor(option, options) {
+        super(`${option} is not a valid context menu option! Please define it in the Context Menu component!`, options);
+    }
+}

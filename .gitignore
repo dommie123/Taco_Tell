@@ -9,4 +9,4 @@ backend/*/__pycache__
 .env
 
 access.log
-*/my_data.db
+backend/instance/my_data.db
