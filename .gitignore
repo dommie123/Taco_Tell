@@ -1,12 +1,21 @@
+# build folder
 /build
+
+# cache
 backend/*/__pycache__
 */__pycache__
 
+# dependencies
 */configs.json
 */package.json
 */package-lock.json
 
+# environment variables
 .env
 
-access.log
+# database files
 backend/instance/my_data.db
+
+# log files
+access.log
+*/logs/*.txt
