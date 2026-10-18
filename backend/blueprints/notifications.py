@@ -6,6 +6,7 @@ from flask_cors import cross_origin
 from datetime import datetime
 
 from constants import CORS_ALLOWED_ORIGINS
+from utils.cooldown import CooldownManager
 
 class NotifStatus(Enum):
     PENDING = 1
@@ -13,12 +14,26 @@ class NotifStatus(Enum):
     SUCCESS = 3
     FAILURE = 4
 
+cooldown_manager = CooldownManager()
 notifications_bp = Blueprint('notifications', __name__, url_prefix='/notification')
 
 @notifications_bp.route('/', methods=['POST'])
 @cross_origin(origins=CORS_ALLOWED_ORIGINS)
 def update_employees():
+    # enforce cooldown, if active
+    is_allowed, retry_after = cooldown_manager.allow()
+    
+    if not is_allowed:
+        return jsonify({
+            "message": "Rate limit exceeded. Please wait 5 minutes before updating employees again.",
+            "retry_after_seconds": retry_after
+        }), 429
+
+    # otherwise, update employees in the list
     employees = request.json.get('employees')
+    if not employees: 
+        return jsonify({ "message": "There are no employees to update!" }), 202
+    
     phone_numbers = [employee["phone"] for employee in employees]
     output = None
 
@@ -39,14 +54,16 @@ def update_employees():
 
         file.close()
 
+    # return appropriate response
     if delivery_errors == 0:
-        output = { "message": "Employees updated successfully!"}, 200
+        output = jsonify({ "message": "Employees updated successfully!"}), 200
     elif delivery_errors > 0 and delivery_errors < len(employees):
-        output = { "message": f"Failed to update {delivery_errors} employees! Please check the log file for more information."}, 500
+        output = jsonify({ "message": f"Failed to update {delivery_errors} employees! Please check the log file for more information."}), 500
     else:
-        output = { "message": "A critical error occurred while trying to notify employees! Please check the log file for more information."}, 500
+        output = jsonify({ "message": "A critical error occurred while trying to notify employees! Please check the log file for more information."}), 500
 
     return output
+    
 
 def deliver_sms_message(message) -> NotifStatus:
     print(f"From: {message["from"]}\nTo: {message["to"]}\nMessage: {message["body"]}")
