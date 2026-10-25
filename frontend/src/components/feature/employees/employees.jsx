@@ -18,6 +18,7 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
     const [cmItem, setCMItem] = useState(null);
     const [erModalVisible, setERModalVisible] = useState(false);
     const [ueModalVisible, setUEModalVisible] = useState(false);
+    const [notifsPending, setNotifsPending] = useState(false);
     const dispatch = useDispatch();
 
     const handleOpenMenu = (event) => {
@@ -66,11 +67,14 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
     const handleUpdateEmployees = () => {
         setUEModalVisible(false);
 
+        setNotifsPending(true)
         axiosPost("notification/", { employees }).then(res => {
             alert(res.data.message);
         }).catch(err => {
             alert(err.response.data.message);
-        })
+        }).finally(() => {
+            setNotifsPending(false);
+        });
     }
 
     const handleAddNewEmployee = () => {
@@ -122,6 +126,7 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
             <button 
                 className="send-update-to-employees-btn"
                 onClick={() => { setUEModalVisible(true) }}
+                disabled={notifsPending}
             >
                 Update Employees
             </button> : 
