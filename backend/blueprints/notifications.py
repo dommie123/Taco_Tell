@@ -164,8 +164,8 @@ def deliver_sms_message(message: str) -> tuple:
 
 def generate_sms_message(phone_number: str) -> object:
     message = {
-        # "body": "ATTENTION: The work schedule has been changed. Please contact your manager for more information.",
-        "body": "sms_appointment_reminders",
+        "body": "Taco Tell - ATTENTION: The work schedule has been changed. Please contact your manager for more information.",
+        # "body": "sms_appointment_reminders",
         "from": f"{TWILIO_PHONE_NUMBER}",
         "to": f"{parse_phone_number(phone_number)}"
     }
