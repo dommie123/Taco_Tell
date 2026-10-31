@@ -134,10 +134,10 @@ def update_employees() -> tuple:
             except Exception as e:
                 delivery_errors += 1
                 error_code = 500
-                error_message = f"Failed to process message delivery to {number}! Reason: {str(e)}"
+                error_message = f"A server error occurred! Error: {str(e)}"
 
                 print(error_message)
-                write_status_to_log_file(number, NotifStatus.FAILED, error_code, error_message)
+                write_status_to_log_file(file, number, NotifStatus.FAILED, error_code, error_message)
 
         file.close()
 
@@ -145,7 +145,7 @@ def update_employees() -> tuple:
     if delivery_errors == 0:
         output = jsonify({ "message": "Employees updated successfully!"}), 200
     elif delivery_errors > 0 and delivery_errors < len(employees):
-        output = jsonify({ "message": f"Failed to update {delivery_errors} employees! Please check the log file for more information." }), 500
+        output = jsonify({ "message": f"Failed to update {delivery_errors} employee{"s" if delivery_errors != 1 else ""}! Please check the log file for more information." }), 500
     else:
         output = jsonify({ "message": "A critical error occurred while trying to notify employees! Please check the log file for more information." }), 500
 
