@@ -5,7 +5,7 @@ import { MOCK_EMPLOYEES_DATA, CLIENT_URL } from '../../../constants';
 import { InvalidContextMenuOptionError } from '../../../errors';
 
 import { setCMOpen, setCMCoords } from '../../../slices/globalSlice';
-import { axiosGet, axiosDelete } from '../../../utils/axiosHelpers';
+import { axiosGet, axiosPost, axiosDelete } from '../../../utils/axiosHelpers';
 
 import { DynamicTable, ContextMenu, Modal } from '../../common';
 
@@ -16,7 +16,9 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
     const [employees, setEmployees] = useState([]);
     const [employeesFetched, setEmployeesFetched] = useState(false);
     const [cmItem, setCMItem] = useState(null);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [erModalVisible, setERModalVisible] = useState(false);
+    const [ueModalVisible, setUEModalVisible] = useState(false);
+    const [notifsPending, setNotifsPending] = useState(false);
     const dispatch = useDispatch();
 
     const handleOpenMenu = (event) => {
@@ -31,12 +33,16 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
         alert("Feature coming soon...");
     }
 
-    const handleCloseModal = () => {
-        setModalVisible(false);
+    const handleCloseERModal = () => {
+        setERModalVisible(false);
+    }
+
+    const handleCloseUEModal = () => {
+        setUEModalVisible(false);
     }
 
     const handleRemoveEmployee = (emp) => {
-        handleCloseModal();
+        handleCloseERModal();
 
         axiosDelete(`employee/${emp.employee_id}`).then(() => {}).catch(err => {
             alert(err.response.data.message);
@@ -49,14 +55,7 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
                 handleEditEmplopyee(item);
                 break;
             case "Remove":
-                // TODO display modal with yes or no options asking to confirm whether they want to remove the user
-                // let userResponse = window.confirm(`Are you sure you want to remove user ${cmItem.employee_id} from the database?`);
-                // if (userResponse) {
-                //     axiosDelete(`employee/${cmItem.employee_id}`).then(() => {}).catch(err => {
-                //         alert(err.response.data.message);
-                //     });
-                // }
-                setModalVisible(true);
+                setERModalVisible(true);
                 break;
             default:
                 throw new InvalidContextMenuOptionError();
@@ -66,7 +65,16 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
     }
 
     const handleUpdateEmployees = () => {
-        // TODO iterate through employee list and send each employee an update
+        setUEModalVisible(false);
+
+        setNotifsPending(true)
+        axiosPost("notification/", { employees }).then(res => {
+            alert(res.data.message);
+        }).catch(err => {
+            alert(err.response.data.message);
+        }).finally(() => {
+            setNotifsPending(false);
+        });
     }
 
     const handleAddNewEmployee = () => {
@@ -117,17 +125,25 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
             { employees.length > 0 ? 
             <button 
                 className="send-update-to-employees-btn"
-                onClick={handleUpdateEmployees}
+                onClick={() => { setUEModalVisible(true) }}
+                disabled={notifsPending}
             >
                 Update Employees
             </button> : 
             <button className="add-employee-btn" onClick={handleAddNewEmployee}>Add Employee</button>
             }
-            {modalVisible ? <Modal title="Confirm Employee Removal" isOpen={true} closable={false}>
+            {erModalVisible ? <Modal title="Confirm Employee Removal" isOpen={true} closable={false}>
                 <p className="employee-confirm-removal-message">Are you sure you want to remove this employee?</p>
                 <div className="employee-confirm-removal-btn-suite">
                     <button className="employee-confirm-removal-btn-yes" onClick={() => { handleRemoveEmployee(cmItem) }}>Yes</button>
-                    <button className="employee-confirm-removal-btn-no" onClick={() => { handleCloseModal() }}>No</button>
+                    <button className="employee-confirm-removal-btn-no" onClick={handleCloseERModal}>No</button>
+                </div>
+            </Modal> : <></>}
+            {ueModalVisible ? <Modal title="Confirm Update Employees" isOpen={true} closable={false}>
+                <p className="employee-confirm-removal-message">Ready to notify all employees of their schedule changes?</p>
+                <div className="employee-confirm-removal-btn-suite">
+                    <button className="employee-confirm-removal-btn-yes" onClick={handleUpdateEmployees}>Yes</button>
+                    <button className="employee-confirm-removal-btn-no" onClick={handleCloseUEModal}>No</button>
                 </div>
             </Modal> : <></>}
         </div>

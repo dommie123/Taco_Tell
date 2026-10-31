@@ -7,6 +7,8 @@ from flask_cors import CORS
 
 from constants import CORS_ALLOWED_ORIGINS
 
+from blueprints.notifications import notifications_bp
+
 from resources.employee import EmployeeRegister, REmployee, EmployeeList
 
 logging.basicConfig(level=logging.DEBUG)
@@ -14,6 +16,8 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///my_data.db'
+
+app.register_blueprint(notifications_bp)
 
 api = Api(app)
 
