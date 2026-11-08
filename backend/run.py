@@ -1,8 +1,13 @@
+import os
+
 from flask import g, request
 from app import app
 from db import db
+from dotenv import load_dotenv
 
 db.init_app(app)
+
+load_dotenv()
 
 @app.before_request
 def create_tables():
@@ -15,4 +20,4 @@ def log_request():
     with open('access.log', 'a') as log:
         log.write(f"{request.remote_addr} - {request.method} {request.path}\n")
 
-app.run(host="127.0.0.1", port=5000, debug=True)
+app.run(host=os.getenv("SERVER_IP"), port=5000, debug=True)
