@@ -6,7 +6,6 @@ backend/*/__pycache__
 */__pycache__
 
 # dependencies
-*/configs.json
 */package.json
 */package-lock.json
 

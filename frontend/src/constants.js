@@ -1,6 +1,8 @@
+import configs from './configs.json';
+
 // Global Constants
-export const SERVER_URL = "http://127.0.0.1:5000";
-export const CLIENT_URL = "http://localhost:3000";
+export const SERVER_URL = `http://${configs.SERVER_IP}:5000`;
+export const CLIENT_URL = `http://${configs.CLIENT_IP}:3000`;
 
 // Mock Constants (these are for testing the UI only)
 export const MOCK_EMPLOYEES_DATA = [
