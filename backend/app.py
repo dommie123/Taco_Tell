@@ -24,6 +24,7 @@ api = Api(app)
 # TODO add and set secret app key
 
 cors = CORS(app, resources={ r"/*": {"origins": CORS_ALLOWED_ORIGINS }})
+print(f"CORS_ALLOWED_ORIGINS: {CORS_ALLOWED_ORIGINS}")
 
 api.add_resource(EmployeeRegister, "/employee")
 api.add_resource(REmployee, "/employee/<int:employee_id>")
