@@ -1,7 +1,9 @@
+
 .dynamic-table {
     width: 100%;
     height: fit-content;
     margin-bottom: 1em;
+    border-spacing: 0;
 }
 
 .dynamic-table-tr {
@@ -17,8 +19,19 @@
 }
 
 .dynamic-table-th, .dynamic-table-td {
-    border: 1px solid black;
-    margin: 0;
+    border-top: 1px solid #401989;
+}
+
+.dynamic-table-td {
+    border-left: 1px solid #401989;
+}
+
+.dynamic-table-tr:last-child > .dynamic-table-td {
+    border-bottom: 1px solid #401989;
+}
+
+.dynamic-table-td:last-child {
+    border-right: 1px solid #401989;
 }
 
 .dynamic-table-no-data-message {

@@ -4,28 +4,39 @@
     background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 10;
 }
 
 .modal-container {
+    display: flex;
+    flex-direction: column;
     width: 25%;
     min-width: 200px;
     height: 30%;
-    min-height: 200px;
+    min-height: 250px;
     max-height: 1000px;
     background-color: white;
     position: absolute;
     top: 30%;
-    left: 40%;
+    left: calc(35% + 50px);
     border: 1px solid gray;
     border-radius: 20px;
     z-index: 11;
+    overflow: hidden;
 }
 
 .modal-header {
+    flex: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.modal-body {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-close {

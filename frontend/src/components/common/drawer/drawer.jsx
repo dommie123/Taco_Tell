@@ -2,9 +2,7 @@ import React, { useEffect, Children } from 'react';
 
 import './drawer.css';
 
-export const Drawer = ({ className, isOpen, onClose, onItemSelect, children }) => {
-    /* --- No changes to existing logic or event listeners --- */
-    
+export const Drawer = ({ className, isOpen, onClose, onItemSelect, children }) => {    
     const handleItemSelect = (item) => {
         onItemSelect(item);
         onClose();
@@ -39,7 +37,13 @@ export const Drawer = ({ className, isOpen, onClose, onItemSelect, children }) =
                 
                 <ul className="drawer-list">
                     {Children.map(children, (child) => 
-                        <li key={Math.random()} className="drawer-list-item" onClick={() => handleItemSelect(child)}>{child}</li>
+                        <li 
+                            key={Math.random()} 
+                            className="drawer-list-item" 
+                            onClick={() => handleItemSelect(child)}
+                        >
+                            {child}
+                        </li>
                     )}
                 </ul>
             </div>
