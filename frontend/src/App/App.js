@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
 import { IconButton } from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import { CLIENT_URL } from '../constants';
 
@@ -46,8 +49,8 @@ function App() {
 				onClose={handleCloseDrawer}
 				onItemSelect={(item) => { window.open(`${CLIENT_URL}/${item.props.value}`, "_self") }}
 			>
-				<div value="">Dashboard</div>
-				<div value="add_employee">Add Employee</div>
+				<div value=""><DashboardIcon style={{ paddingRight: "10px" }} /><p className="left-align important">Dashboard</p></div>
+				<div value="add_employee"><PersonAddAlt1Icon style={{ paddingRight: "10px" }} /><p className="left-align important">Add Employee</p></div>
 			</Drawer>
 		</div>
 	);

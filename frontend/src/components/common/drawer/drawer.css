@@ -64,3 +64,13 @@
 .drawer-list-item:hover {
     background-color: lightgray;
 }
+
+.drawer-list-item > div {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.drawer-list-item > div > p {
+    margin-top: 5px !important;
+}
+

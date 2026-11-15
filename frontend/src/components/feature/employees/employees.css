@@ -5,17 +5,42 @@
 .employees-table-th {
     background-color: rgb(88, 40, 143);
     color: white;
+    font-family: "url(../fonts/GT-America-Standard-Medium-Trial.woff2)", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    padding: 5px 0;
+    text-transform: uppercase;
 }
 
-.employee-confirm-removal-btn-suite {
+.employees-table-tr {
+    font-family: "url(../fonts/GT-America-Standard-Medium-Trial.woff2)", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: black;
+}
+
+.employees-container > .modal-backdrop > .modal-container > .modal-body > .modal-title {
+    padding-bottom: 0px !important;
+}
+
+.employee-confirm-removal-btn-suite, .employees-confirm-update-btn-suite {
+    flex: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     height: 25px;
     margin: auto 10px;
+    position: relative;
+    top: 10%;
 }
 
-.employee-confirm-removal-btn-suite > button {
+.employee-confirm-removal-btn-suite > button, .employees-confirm-update-btn-suite > button {
     flex: 1;
     margin: auto 5px;
 }
+
+.cm-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 5px;
+}
+

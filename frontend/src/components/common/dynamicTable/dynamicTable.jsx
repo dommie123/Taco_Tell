@@ -38,7 +38,7 @@ export const DynamicTable = ({ className, items, dataOptionsEnabled, onEntryOpti
                     {listItems.map((item, index) => (
                     <tr 
                         key={Math.random()} 
-                        className={`${className}-tr-${index} dynamic-table-tr-${index}`} 
+                        className={`${className}-tr ${className}-tr-${index} dynamic-table-tr dynamic-table-tr-${index}`} 
                         role="row" 
                     >
                         {tableColumns.map((col, index) => <td key={Math.random()} className={`${className}-td-${item[col]} dynamic-table-td-${item[col]} dynamic-table-td`}>

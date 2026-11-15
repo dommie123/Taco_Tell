@@ -187,7 +187,7 @@ export const AddEmployee = ({ onEmployeeCreated, debug = false }) => {
                 {error.phone ? <p className="add-employee-input-error-message">{error.phone}</p> : null}
             </div>
 
-            <input className={`add-employee-submit-btn${submitDisabled ? " disabled" : ""}`} type="submit" value="Add Employee" disabled={submitDisabled} />
+            <input className={`add-employee-submit-btn${submitDisabled ? " disabled" : " primary"}`} type="submit" value="Add Employee" disabled={submitDisabled} />
         </form>
     )
 }

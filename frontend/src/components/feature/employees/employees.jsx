@@ -9,6 +9,9 @@ import { axiosGet, axiosPost, axiosDelete } from '../../../utils/axiosHelpers';
 
 import { DynamicTable, ContextMenu, Modal } from '../../common';
 
+import EditIcon from '@mui/icons-material/Edit';
+import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
+
 import './employees.css';
 
 export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, mockColumns }) => {
@@ -119,12 +122,12 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
                 anchorPosition="top-left"
                 onMenuItemClick={handleCMItemClick}
             >
-                <div className="cm-item">Edit</div>
-                <div className="cm-item">Remove</div>
+                <div className="cm-item"><EditIcon style={{ paddingRight: "10px"}} /><p className="left-align important" style={{ margin: 0 }}>Edit</p></div>
+                <div className="cm-item"><PersonRemoveAlt1Icon style={{ paddingRight: "10px"}} /><p className="left-align important" style={{ margin: 0 }}>Remove</p></div>
             </ContextMenu>
             { employees.length > 0 ? 
             <button 
-                className="send-update-to-employees-btn"
+                className="primary send-update-to-employees-btn"
                 onClick={() => { setUEModalVisible(true) }}
                 disabled={notifsPending}
             >
@@ -135,15 +138,15 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
             {erModalVisible ? <Modal title="Confirm Employee Removal" isOpen={true} closable={false}>
                 <p className="employee-confirm-removal-message">Are you sure you want to remove this employee?</p>
                 <div className="employee-confirm-removal-btn-suite">
-                    <button className="employee-confirm-removal-btn-yes" onClick={() => { handleRemoveEmployee(cmItem) }}>Yes</button>
-                    <button className="employee-confirm-removal-btn-no" onClick={handleCloseERModal}>No</button>
+                    <button className="secondary employee-confirm-removal-btn-yes" onClick={() => { handleRemoveEmployee(cmItem) }}>Yes</button>
+                    <button className="secondary employee-confirm-removal-btn-no" onClick={handleCloseERModal}>No</button>
                 </div>
             </Modal> : <></>}
             {ueModalVisible ? <Modal title="Confirm Update Employees" isOpen={true} closable={false}>
-                <p className="employee-confirm-removal-message">Ready to notify all employees of their schedule changes?</p>
-                <div className="employee-confirm-removal-btn-suite">
-                    <button className="employee-confirm-removal-btn-yes" onClick={handleUpdateEmployees}>Yes</button>
-                    <button className="employee-confirm-removal-btn-no" onClick={handleCloseUEModal}>No</button>
+                <p className="employees-confirm-update-message">Ready to notify all employees of their schedule changes?</p>
+                <div className="employees-confirm-update-btn-suite">
+                    <button className="primary employees-confirm-update-btn-yes" onClick={handleUpdateEmployees}>Yes</button>
+                    <button className="secondary employees-confirm-update-btn-no" onClick={handleCloseUEModal}>No</button>
                 </div>
             </Modal> : <></>}
         </div>
