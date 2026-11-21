@@ -1,5 +1,7 @@
 import os
 import time
+import pathlib
+
 from datetime import datetime
 from enum import Enum
 from dotenv import load_dotenv
@@ -101,6 +103,10 @@ def update_employees() -> tuple:
         return jsonify({ "message": "There are no employees to update!" }), 202
     
     phone_numbers = [employee["phone"] for employee in employees]
+
+    # If the logs folder does not exist, create it.
+    log_folder_path = pathlib.Path("logs")
+    log_folder_path.mkdir(parents=True, exist_ok=True)
     
     with open(f"logs/sms_log_{datetime.now()}.txt", "a") as file:
         delivery_errors = 0

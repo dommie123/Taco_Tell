@@ -32,7 +32,7 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
 		dispatch(setCMOpen(!cmOpen));
 	}
 
-    const handleEditEmplopyee = (emp) => {
+    const handleEditEmployee = (emp) => {
         alert("Feature coming soon...");
     }
 
@@ -49,13 +49,15 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
 
         axiosDelete(`employee/${emp.employee_id}`).then(() => {}).catch(err => {
             alert(err.response.data.message);
+        }).finally(() => {
+            setEmployeesFetched(false);
         });
     }
 
     const handleCMItemClick = (item) => {
         switch (item) {
             case "Edit":
-                handleEditEmplopyee(item);
+                handleEditEmployee(item);
                 break;
             case "Remove":
                 setERModalVisible(true);
@@ -82,10 +84,11 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
 
     const handleAddNewEmployee = () => {
         window.open(`${CLIENT_URL}/add_employee`, '_self');
+        setEmployeesFetched(false);
     }
 
     useEffect(() => {
-        if (employeesFetched || employees.length > 0) {
+        if (employeesFetched && employees.length > 0) {
             return;
         }
 
@@ -122,8 +125,8 @@ export const Employees = ({ debug = false, mockEmployees = MOCK_EMPLOYEES_DATA, 
                 anchorPosition="top-left"
                 onMenuItemClick={handleCMItemClick}
             >
-                <div className="cm-item"><EditIcon style={{ paddingRight: "10px"}} /><p className="left-align important" style={{ margin: 0 }}>Edit</p></div>
-                <div className="cm-item"><PersonRemoveAlt1Icon style={{ paddingRight: "10px"}} /><p className="left-align important" style={{ margin: 0 }}>Remove</p></div>
+                <div className="cm-item" value="Edit"><EditIcon style={{ paddingRight: "10px"}} /><p className="left-align important" style={{ margin: 0 }}>Edit</p></div>
+                <div className="cm-item" value="Remove"><PersonRemoveAlt1Icon style={{ paddingRight: "10px"}} /><p className="left-align important" style={{ margin: 0 }}>Remove</p></div>
             </ContextMenu>
             { employees.length > 0 ? 
             <button 

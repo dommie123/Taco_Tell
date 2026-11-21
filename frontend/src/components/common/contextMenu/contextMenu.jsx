@@ -93,7 +93,7 @@ export const ContextMenu = ({ isOpen = false, anchorPosition, onMenuItemClick, c
                 { Children.map(children, (child, index) => 
                     <li 
                         className={`conext-menu-item-${index} context-menu-item`} 
-                        onClick={() => { handleMenuItemClick(child.props.children) }}
+                        onClick={() => { handleMenuItemClick(child.props.value) }}
                         role="menuitem"
                     >
                         {child}
