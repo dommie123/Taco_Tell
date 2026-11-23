@@ -29,7 +29,7 @@ function App() {
 	const determineHeaderTitleFromLocation = () => {
 		switch (window.location.pathname) {
 			case "/":
-				return "Taco Tell";
+				return "Dashboard";
 			case "/add_employee":
 				return "Add New Employee";
 			default:
