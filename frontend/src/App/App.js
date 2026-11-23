@@ -11,6 +11,8 @@ import { CLIENT_URL } from '../constants';
 import Router from '../nav/router';
 import { Drawer } from '../components/common';
 
+import { ReactComponent as TacoTellIcon } from '../assets/tt_logo.svg';
+
 import './App.css';
 
 function App() {
@@ -38,6 +40,10 @@ function App() {
 	return (
 		<div className="App">
 			<header className="app-header">
+				<div className="app-logo-container">
+					<TacoTellIcon width={50} height={50} />
+					<h1 className="app-h2">Taco Tell</h1>
+				</div>
 				<h1 className="app-h1">{determineHeaderTitleFromLocation()}</h1>
 				<IconButton className="app-menu" onClick={handleToggleDrawer}>
 					<MenuIcon />

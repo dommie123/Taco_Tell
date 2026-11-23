@@ -21,6 +21,15 @@
 
 .app-h1 {
     flex: 8;
+    padding-right: 15rem;
+}
+
+.app-logo-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
 }
 
 h1, h2, h3, h4 {
@@ -36,7 +45,7 @@ h1 {
     font-size: 3.125rem;
 }
 
-h2 {
+h2, h1.app-h2 {
     font-size: 2rem;
 }
 
